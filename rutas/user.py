@@ -11,17 +11,14 @@ user = APIRouter()
 
 @user.get("/", status_code=200)
 async def root(response: Response):
-    if response.status_code == 200:
-        logging.info(' Get For to ROOT / ')
-        cursor.execute("SELECT * from usuarios ;")
-        rows = cursor.fetchall()
-        for row in rows:
-            print(f" ->", row[1] )
-        # add worning info and error
-        logging.warning('Consulta Sql de todos los usurios')
-    else:
-        print("Error")
-        rows = "No se encuentra pagina"
+    
+    logging.info(' Get For to ROOT / ')
+    cursor.execute("SELECT * from usuarios ;")
+    rows = cursor.fetchall()
+    for row in rows:
+        print(f" ->", row[1] )
+    # add worning info and error
+    logging.warning('Consulta Sql de todos los usurios')
     return { "message": f"{rows}" }
 
 

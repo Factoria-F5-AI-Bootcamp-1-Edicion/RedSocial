@@ -15,7 +15,8 @@ con los datos para la conexion a la base de datos posgre
 
 ## Creamos la carpeta routes
 se añade el fichero user.py
-desde el que se gestiona los usuarios en http://127.0.0.1/user/
+desde el que se gestiona los usuarios en:
+http://127.0.0.1/user/
 
 
 ## para más pruebas sobre la api

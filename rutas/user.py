@@ -65,3 +65,19 @@ async def post(id_usuario: str, mensaje: str):
     cursor.execute(f"INSERT INTO publicaciones (tweets,fecha_de_publicacion ,id_topicos, id_usuario) VALUES  ('{mensaje}', '01-01-2022', 1, {id_usuario}) ; ")
     db.commit()
     return {"posteado id": f"{id_usuario}"}
+
+
+@user.put("/update/{id_usuario}/{id_publicaciones}/{mensaje}")
+    # http://127.0.0.1:8000/update/1/15/samuray
+async def post(id_usuario: str, id_publicaciones: str, mensaje: str):   
+    cursor.execute(f"UPDATE publicaciones SET tweets = '{mensaje}' WHERE id_usuario = {id_usuario} and id_publicaciones = {id_publicaciones}; ")
+    db.commit()
+    return {"modificado id": f"{id_publicaciones}"}
+
+
+@user.delete("/delete/{id_usuario}/{id_publicaciones}")
+    # http://127.0.0.1:8000/delete/1/15/
+async def post(id_usuario: str, id_publicaciones: str):   
+    cursor.execute(f"DELETE From publicaciones WHERE id_publicaciones = {id_publicaciones} and id_usuario = {id_usuario} ; ")
+    db.commit()
+    return {"borrada id": f"{id_publicaciones}"}

@@ -13,7 +13,6 @@ DB_HOST = os.environ.get('DB_HOST')
 DB_PORT = os.environ.get('DB_PORT')
 DB_DDBB = os.environ.get('DB_DDBB')
 
-print(DB_DDBB)
 
 db = psycopg2.connect(user=DB_USER,
                   password=DB_PASS,
@@ -25,7 +24,7 @@ db = psycopg2.connect(user=DB_USER,
 cursor = db.cursor()
 
     # Print PostgreSQL details
-print("PostgreSQL server information")
+print(f"PostgreSQL server information")
     #print(db.get_dsn_parameters(), "\n")
 
     #cursor.execute("CREATE TABLE Persons (PersonID int, LastName varchar(25));")
@@ -38,4 +37,4 @@ print("PostgreSQL server information")
     ##    print(f" ->", row[1] )
     # Fetch result
    
-print("You are connected \n")
+print(f"You are connected to {DB_DDBB} \n")

@@ -18,7 +18,8 @@ db = psycopg2.connect(user=DB_USER,
                   password=DB_PASS,
                   host=DB_HOST,
                   port=DB_PORT,
-                  database=DB_DDBB)
+                  database=DB_DDBB,
+                  connect_timeout=10)
 
     # Create a cursor to perform database operations
 cursor = db.cursor()

@@ -1,9 +1,11 @@
-# Byte-compiled / optimized / DLL files
+.env
 mylog.log
+
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
-.env
+
 # C extensions
 *.so
 

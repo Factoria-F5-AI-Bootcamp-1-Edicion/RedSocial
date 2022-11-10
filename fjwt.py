@@ -13,7 +13,7 @@ def crea_token(data: dict):
     to_encode = data.copy()
      
     # expire time of the token
-    expire = datetime.utcnow() + timedelta(minutes=4)
+    expire = datetime.utcnow() + timedelta(minutes=60)
     to_encode.update({"exp": expire})
     token = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
      

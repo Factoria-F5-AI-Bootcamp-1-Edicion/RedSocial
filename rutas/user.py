@@ -83,7 +83,7 @@ async def login(user: str):
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Could not validate credentials"
             )
-    cursor.close()
+    #cursor.close()
 
 @user.post("/buscar/{todos_id}", status_code=200)
 # http://127.0.0.1:8000/buscar/usuarios
@@ -91,13 +91,14 @@ async def buscar(token: str,todos_id: str):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         #print(payload['nombre'])
-        with cursor:
-            cursor.execute(f"SELECT * from {todos_id}")
-            rows = cursor.fetchall()
+        #with cursor:
+        cursor.execute(f"SELECT * from {todos_id}")
+        rows = cursor.fetchall()
             #if rows.length > 0:
                 #cursor.close()   
-            return rows #payload
-        cursor.close()
+        #cursor.close()
+        return rows #payload
+        
     except JWTError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -115,10 +116,10 @@ async def post(token: str,id_usuario: str, id_publicaciones: str):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         #print(payload['nombre'])
-        with cursor:
-            cursor.execute(f"DELETE From publicaciones WHERE id_publicaciones = {id_publicaciones} and id_usuario = {id_usuario} ; ")
-            db.commit()
-            cursor.close()
+        #with cursor:
+        cursor.execute(f"DELETE From publicaciones WHERE id_publicaciones = {id_publicaciones} and id_usuario = {id_usuario} ; ")
+        db.commit()
+        
         return {"borrada id": f"{id_publicaciones}"}
         
     except JWTError:

@@ -70,7 +70,7 @@ async def root():
 # solo si existe el usuario te da el token.
 @user.post("/login/{user}",status_code=200)
 async def login(user: str):
-    with cursor:    
+       
         cursor.execute(f"SELECT * from usuarios where nombres = '{user}';")
         rows = cursor.fetchall()
         # buscamos el usuario en la base de datos
@@ -78,12 +78,14 @@ async def login(user: str):
             if f"{user}" in row[1]:
                 token = crea_token(data=data)
                 return ({'token': {token}})
+               
+
             else:
                 return HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Could not validate credentials"
             )
-    #cursor.close()
+    
 
 @user.post("/buscar/{todos_id}", status_code=200)
 # http://127.0.0.1:8000/buscar/usuarios
@@ -91,12 +93,10 @@ async def buscar(token: str,todos_id: str):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         #print(payload['nombre'])
-        #with cursor:
+        
         cursor.execute(f"SELECT * from {todos_id}")
         rows = cursor.fetchall()
-            #if rows.length > 0:
-                #cursor.close()   
-        #cursor.close()
+            
         return rows #payload
         
     except JWTError:
@@ -104,8 +104,7 @@ async def buscar(token: str,todos_id: str):
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Could not validate credentials",
         )
-    #finally:
-        #cursor.close()
+    
 
 
 
@@ -139,10 +138,10 @@ async def post(token: str,id_usuario: str, id_publicaciones: str, mensaje: str):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         #print(payload['nombre'])
-        with cursor:
-            cursor.execute(f"UPDATE publicaciones SET tweets = '{mensaje}' WHERE id_usuario = {id_usuario} and id_publicaciones = {id_publicaciones}; ")
-            db.commit()
-            cursor.close()
+        
+        cursor.execute(f"UPDATE publicaciones SET tweets = '{mensaje}' WHERE id_usuario = {id_usuario} and id_publicaciones = {id_publicaciones}; ")
+        db.commit()
+        cursor.close()
         return {"modificado id": f"{id_publicaciones}"}
     except JWTError:
         raise HTTPException(
@@ -177,10 +176,10 @@ async def fecha(token: str,fecha_inicio: str = '03-05-2022',fecha_final: str = '
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         #print(payload['nombre'])
-        with cursor:
-            cursor.execute(f"SELECT * FROM publicaciones WHERE fecha_de_publicacion >= '{fecha_inicio}' AND fecha_de_publicacion <= '{fecha_final}' ; ")
-            rows = cursor.fetchall()
-        cursor.close()
+        
+        cursor.execute(f"SELECT * FROM publicaciones WHERE fecha_de_publicacion >= '{fecha_inicio}' AND fecha_de_publicacion <= '{fecha_final}' ; ")
+        rows = cursor.fetchall()
+        
         return {"rango_fecha": f"{rows}"}
     except JWTError:
         raise HTTPException(
@@ -196,10 +195,10 @@ async def buscar(token: str,nombre: str):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         #print(payload['nombre'])
-        with cursor:
-            cursor.execute(f"SELECT * FROM usuarios E FULL JOIN interacciones D ON E.id_usuario = D.Id_usuario FULL JOIN publicaciones P ON E.id_usuario = P.id_usuario where nombres = '{nombre}' ")
-            rows = cursor.fetchall()
-        cursor.close()
+        
+        cursor.execute(f"SELECT * FROM usuarios E FULL JOIN interacciones D ON E.id_usuario = D.Id_usuario FULL JOIN publicaciones P ON E.id_usuario = P.id_usuario where nombres = '{nombre}' ")
+        rows = cursor.fetchall()
+        # cursor.close()
         return {"nombre": f"{rows}"}
     except JWTError:
         raise HTTPException(
@@ -213,9 +212,9 @@ async def verify_token(token: str):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         print(payload)
-        with cursor:
-            cursor.execute(f"SELECT * from usuarios ;")
-            rows = cursor.fetchall()
+        
+        cursor.execute(f"SELECT * from usuarios ;")
+        rows = cursor.fetchall()
         cursor.close()
         return rows #payload
     except JWTError:

@@ -10,5 +10,5 @@ WORKDIR /home
 #ENTRYPOINT ["python3"]
 #CMD ["hola.py"]
 RUN pip install -r requirements.txt
-##RUN uvicorn main:app --reload
+RUN uvicorn main:app --reload
 
